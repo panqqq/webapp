@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,29 +27,27 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAll() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAll() {
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        return ResponseEntity.status(HttpStatus.OK).body(employeeList);
     }
 
     @GetMapping("{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployee(id);
+    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployee(id);
+        return ResponseEntity.status(HttpStatus.OK).body(employee);
     }
 
     @PostMapping
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
         Employee e = employeeService.add(employee);
-        URI uri = MvcUriComponentsBuilder.fromController(getClass())
-                .path("/{id}")
-                .build(e.getId());
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .header("Location", uri.toString())
-                .body(e);
+        return ResponseEntity.status(HttpStatus.CREATED).body(e);
     }
 
     @PutMapping("{id}")
-    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
-        return employeeService.update(employee, id);
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
+        Employee updatedEmployee = employeeService.update(employee, id);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
     }
 
 

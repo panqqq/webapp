@@ -2,17 +2,16 @@ package com.endava.webapp.services;
 
 import com.endava.webapp.model.Department;
 import com.endava.webapp.repositories.DepartmentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
 @Service
+@RequiredArgsConstructor
 public class DepartmentService {
     private final DepartmentRepository departmentRepository;
-
-    public DepartmentService(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
-    }
 
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
@@ -28,7 +27,7 @@ public class DepartmentService {
     }
 
     public Department updateDepartment(Department department, Long id) {
-        if(!departmentRepository.existsById(id)) {
+        if (!departmentRepository.existsById(id)) {
             throw new NoSuchElementException("The department ID " + id + " was not found!");
         }
         department.setId(id);

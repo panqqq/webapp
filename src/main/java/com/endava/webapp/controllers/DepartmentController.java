@@ -2,6 +2,7 @@ package com.endava.webapp.controllers;
 
 import com.endava.webapp.model.Department;
 import com.endava.webapp.services.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,34 +21,32 @@ import java.util.List;
 @RequestMapping("departments")
 public class DepartmentController {
     private final DepartmentService departmentService;
-
+    @Autowired
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 
     @GetMapping
-    public List<Department> getAll() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<Department>> getAll() {
+        List<Department> departments = departmentService.getAllDepartments();
+        return ResponseEntity.status(HttpStatus.OK).body(departments);
     }
 
     @GetMapping("{id}")
-    public Department getDepartmentById(@PathVariable Long id) {
-        return departmentService.getDepartment(id);
+    public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
+        Department department = departmentService.getDepartment(id);
+        return ResponseEntity.status(HttpStatus.OK).body(department);
     }
 
     @PostMapping
-    public ResponseEntity<?> addDepartment(@RequestBody Department department) {
+    public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
         Department d = departmentService.addDepartment(department);
-        URI uri = MvcUriComponentsBuilder.fromController(getClass())
-                .path("/{id}")
-                .build(d.getId());
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .header("Location", uri.toString())
-                .body(d);
+        return ResponseEntity.status(HttpStatus.CREATED).body(d);
     }
 
     @PutMapping("{id}")
-    public Department updateDepartment(@RequestBody Department department, @PathVariable Long id) {
-        return departmentService.updateDepartment(department, id);
+    public ResponseEntity<Department> updateDepartment(@RequestBody Department department, @PathVariable Long id) {
+        Department updateDepartment = departmentService.updateDepartment(department, id);
+        return ResponseEntity.status(HttpStatus.OK).body(updateDepartment);
     }
 }
