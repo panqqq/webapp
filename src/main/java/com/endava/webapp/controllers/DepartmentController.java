@@ -33,19 +33,19 @@ public class DepartmentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
+    public ResponseEntity<Department> getDepartmentById(@PathVariable final Long id) {
         final Department department = departmentService.getDepartment(id);
         return ResponseEntity.status(HttpStatus.OK).body(department);
     }
 
     @PostMapping
-    public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
+    public ResponseEntity<Department> addDepartment(@RequestBody final Department department) {
         final Department addedDepartment = departmentService.addDepartment(department);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedDepartment);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Department> updateDepartment(@RequestBody Department department, @PathVariable Long id) {
+    public ResponseEntity<Department> updateDepartment(@RequestBody final Department department, @PathVariable final Long id) {
         final Department updateDepartment = departmentService.updateDepartment(department, id);
         return ResponseEntity.status(HttpStatus.OK).body(updateDepartment);
     }
