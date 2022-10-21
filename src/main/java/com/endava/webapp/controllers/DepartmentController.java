@@ -28,25 +28,25 @@ public class DepartmentController {
 
     @GetMapping
     public ResponseEntity<List<Department>> getAll() {
-        List<Department> departments = departmentService.getAllDepartments();
+        final List<Department> departments = departmentService.getAllDepartments();
         return ResponseEntity.status(HttpStatus.OK).body(departments);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
-        Department department = departmentService.getDepartment(id);
+        final Department department = departmentService.getDepartment(id);
         return ResponseEntity.status(HttpStatus.OK).body(department);
     }
 
     @PostMapping
     public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
-        Department d = departmentService.addDepartment(department);
-        return ResponseEntity.status(HttpStatus.CREATED).body(d);
+        final Department addedDepartment = departmentService.addDepartment(department);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedDepartment);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Department> updateDepartment(@RequestBody Department department, @PathVariable Long id) {
-        Department updateDepartment = departmentService.updateDepartment(department, id);
+        final Department updateDepartment = departmentService.updateDepartment(department, id);
         return ResponseEntity.status(HttpStatus.OK).body(updateDepartment);
     }
 }

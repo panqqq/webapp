@@ -15,19 +15,19 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return (List<Employee>) employeeRepository.findAll();
     }
 
-    public Employee getEmployee(Long id) {
+    public Employee getEmployee(final Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("The employee ID " + id + " was not found!"));
     }
 
-    public Employee add(Employee employee) {
+    public Employee add(final Employee employee) {
         employeeRepository.save(employee);
         return employee;
     }
 
-    public Employee update(Employee employee, Long id) {
+    public Employee update(final Employee employee, Long id) {
         if (!employeeRepository.existsById(id)) {
             throw new NoSuchElementException("The employee ID " + id + " was not found!");
         }

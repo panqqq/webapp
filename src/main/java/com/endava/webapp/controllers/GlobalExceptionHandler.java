@@ -1,5 +1,6 @@
 package com.endava.webapp.controllers;
 
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +27,6 @@ public class GlobalExceptionHandler {
         String exc = exception.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(System.lineSeparator()));
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                .body(new ErrorResponse(exc, HttpStatus.NOT_ACCEPTABLE.value(), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase()));
-    }
-
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorResponse> OracleDatabaseException(DataIntegrityViolationException exception) {
-        String exc = exception.getMessage();
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
                 .body(new ErrorResponse(exc, HttpStatus.NOT_ACCEPTABLE.value(), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase()));
     }

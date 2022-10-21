@@ -14,19 +14,18 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
 
     public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+        return (List<Department>) departmentRepository.findAll();
     }
 
-    public Department getDepartment(Long id) {
+    public Department getDepartment(final Long id) {
         return departmentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("The department ID " + id + " was not found!"));
     }
 
-    public Department addDepartment(Department department) {
-        Department res = departmentRepository.save(department);
-        return res;
+    public Department addDepartment(final Department department) {
+        return departmentRepository.save(department);
     }
 
-    public Department updateDepartment(Department department, Long id) {
+    public Department updateDepartment(final Department department, Long id) {
         if (!departmentRepository.existsById(id)) {
             throw new NoSuchElementException("The department ID " + id + " was not found!");
         }

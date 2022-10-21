@@ -28,25 +28,25 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAll() {
-        List<Employee> employeeList = employeeService.getAllEmployees();
+        final List<Employee> employeeList = employeeService.getAllEmployees();
         return ResponseEntity.status(HttpStatus.OK).body(employeeList);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
-        Employee employee = employeeService.getEmployee(id);
+        final Employee employee = employeeService.getEmployee(id);
         return ResponseEntity.status(HttpStatus.OK).body(employee);
     }
 
     @PostMapping
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
-        Employee e = employeeService.add(employee);
+        final Employee e = employeeService.add(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(e);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
-        Employee updatedEmployee = employeeService.update(employee, id);
+        final Employee updatedEmployee = employeeService.update(employee, id);
         return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
     }
 
