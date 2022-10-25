@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -38,12 +40,14 @@ public class Employee {
     private Department department;
 
     @NotBlank(message = "The email should not be blank")
+    @Email
     @Column(unique = true)
     private String email;
 
     @NotBlank(message = "The phone_number should not be blank")
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
+
     @Min(value = 1, message = "Salary should not be less than 1.0")
     private Double salary;
 
